@@ -3483,6 +3483,11 @@ static int load_module(struct load_info *info, const char __user *uargs,
 	long err;
 	char *after_dashes;
 
+	// kernel: module: Ignore all magic mismatches
+	// FIXME: https://github.com/erfanoabdi/android_kernel_motorola_sdm632/commit/a1d16bf0f1dd79f1d693b690e49a80447b1fc0bb
+	flags |= MODULE_INIT_IGNORE_MODVERSIONS;
+	flags |= MODULE_INIT_IGNORE_VERMAGIC;
+
 	err = module_sig_check(info, flags);
 	if (err)
 		goto free_copy;
